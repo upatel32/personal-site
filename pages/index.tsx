@@ -1,23 +1,19 @@
-import Footer from "../components/Footer/Footer";
-import { createClient } from "urql";
-import Header from "../components/Header/Header";
-import { profileEnd } from "console";
+import React from 'react';
+import { createClient } from 'urql';
 
-const Home = ({ profile }) => {
-  console.log(profile);
-  return (
-    <div>
-      <Header />
-      <pre>{JSON.stringify(profile, null, 2)}</pre>
-      <Footer />
-    </div>
-  );
-};
+import Footer from '../components/Footer/Footer';
+import Header from '../components/Header/Header'; // '../components/Header/Header';
 
+const Home = ({ profile }) => (
+  <div>
+    <Header />
+    <pre>{JSON.stringify(profile, null, 2)}</pre>
+    <Footer />
+  </div>
+);
 const UserQuery = `
 query {
   user(login: "upatel32") {
-    id
     websiteUrl
     bio
     company
@@ -28,18 +24,16 @@ query {
 
 export async function getStaticProps() {
   const client = createClient({
-    url: "https://api.github.com/graphql",
+    url: 'https://api.github.com/graphql',
     fetchOptions: {
-      headers: { authorization: `Bearer ${process.env.GITHUB_PAC}` },
-    },
+      headers: { authorization: `Bearer ${process.env.GITHUB_PAC}` }
+    }
   });
   const profile = await client.query(UserQuery).toPromise();
-
-  console.log(profile);
   return {
     props: {
-      profile: profile.data,
-    },
+      profile: profile.data
+    }
   };
 }
 
