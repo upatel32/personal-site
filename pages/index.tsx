@@ -1,18 +1,12 @@
 import React from 'react';
 import { createClient } from 'urql';
 
-import Footer from '../components/Footer/Footer';
-import Header from '../components/Header/Header'; // '../components/Header/Header';
+const Home = ({ profile }: { profile: any }) => (
+  <div>
+    <pre>{JSON.stringify(profile, null, 2)}</pre>
+  </div>
+);
 
-const Home = ({ profile }) => {
-  return (
-    <div>
-      <Header />
-      <pre>{JSON.stringify(profile, null, 2)}</pre>
-      <Footer />
-    </div>
-  );
-};
 const UserQuery = `
 query {
   user(login: "upatel32") {

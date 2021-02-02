@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "eslint . --ext .ts,.tsx,.js,.jsx,.json,.css ",
+    "lint:fix": "eslint . --fix --ext .ts,.tsx,.js,.jsx,.json,.css ",
+    "format": "prettier --write \"**/*.+(ts|tsx|js|jsx|json|css)\""
   },
   "dependencies": {
     "autoprefixer": "^10.2.1",
@@ -39,10 +42,14 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run lint:fix && npm run format"
     }
   },
   "lint-staged": {
-    "*.js": "eslint --cache --fix"
+    "*.{js,jsx,json,ts,tsx,css}": [
+      "lint:fix",
+      "format",
+      "git add"
+    ]
   }
 }
